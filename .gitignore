@@ -1,0 +1,8 @@
+# Temporary files
+temp/
+
+# Audio files
+*.mp3
+
+#FFmpeg
+ffmpeg-2025-11-06-git-222127418b-essentials_build
