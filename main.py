@@ -5,9 +5,17 @@ import os
 from tqdm import tqdm
 import shutil
 import re
+import glob
 
-FFMPEG_PATH = os.path.join(os.path.dirname(__file__), 'ffmpeg-2025-11-06-git-222127418b-essentials_build', 'ffmpeg-2025-11-06-git-222127418b-essentials_build', 'bin')
-os.environ["PATH"] += os.pathsep + FFMPEG_PATH
+# Find ffmpeg path dynamically
+ffmpeg_path = (glob.glob(os.path.join(os.path.dirname(__file__), 'ffmpeg-*-essentials_build', 'ffmpeg-*-essentials_build', 'bin')) or
+               glob.glob(os.path.join(os.path.dirname(__file__), 'ffmpeg-*-essentials_build', 'bin')))
+
+if ffmpeg_path:
+    os.environ["PATH"] += os.pathsep + ffmpeg_path[0]
+else:
+    print("FFMPEG path not found. Please make sure ffmpeg is extracted in the root directory.")
+    exit()
 
 def is_valid_youtube_url(url):
     """
@@ -57,7 +65,6 @@ def download_full_audio(youtube_url):
         video_title = info_dict.get('title', 'untitled')
         sanitized_title = "".join(c for c in video_title if c.isalnum() or c in (' ', '-')).rstrip()
         output_filename = os.path.join(output_dir, f"{sanitized_title}.mp3")
-        # Rename the downloaded file to the sanitized title
         downloaded_file = ydl.prepare_filename(info_dict).replace(info_dict['ext'], 'mp3')
         os.rename(downloaded_file, output_filename)
         return output_filename
@@ -73,7 +80,6 @@ def download_audio_segment(youtube_url, start_time, end_time):
         end_time (str): The end time of the audio segment in HH:MM:SS format.
     """
     
-    # Create a temporary directory to store the downloaded audio
     if not os.path.exists("temp"):
         os.makedirs("temp")
 
@@ -87,7 +93,6 @@ def download_audio_segment(youtube_url, start_time, end_time):
             pbar.n = pbar.total
             pbar.close()
 
-    # Download the full audio of the video
     ydl_opts = {
         "format": "bestaudio/best",
         "outtmpl": "temp/%(id)s.%(ext)s",

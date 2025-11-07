@@ -1,11 +1,17 @@
-# YouTube Audio Segment Downloader
+# YouTube Audio Downloader
 
-This Python script downloads specific time ranges of audio from YouTube videos.
+This Python script allows you to download audio from YouTube videos, either the full audio or specific segments.
+
+## Features
+
+*   Download full audio from a YouTube video.
+*   Download specific audio segments from a YouTube video.
+*   Command-line interface for easy interaction.
 
 ## Requirements
 
-- Python 3.6+
-- FFmpeg
+*   Python 3.6+
+*   FFmpeg
 
 ## Installation
 
@@ -14,31 +20,21 @@ This Python script downloads specific time ranges of audio from YouTube videos.
     ```
     pip install -r requirements.txt
     ```
-3.  Download FFmpeg (ffmpeg-git-essentials.7z) from [https://www.gyan.dev/ffmpeg/builds](https://www.gyan.dev/ffmpeg/builds) and extract it.
-4.  Place the extracted FFmpeg folder in the root directory of the project. The folder structure should look like this:
-    ```
-    Youtube_Audio_Segmentation/
-    ├── ffmpeg-2025-11-06-git-222127418b-essentials_build/
-    │   └── ...
-    ├── main.py
-    ├── ...
-    ```
+3.  Download the latest FFmpeg essentials build from [https://www.gyan.dev/ffmpeg/builds/](https://www.gyan.dev/ffmpeg/builds/).
+4.  Extract the downloaded file and place the `ffmpeg-*-essentials_build` folder into the root of the project directory. The script is configured to locate ffmpeg within this folder.
 
 ## Usage
 
-1.  Create a file named `videos.txt` in the same directory as the script.
-2.  Add the YouTube video URLs and the desired time ranges to the `videos.txt` file. The format for each line should be:
-    ```
-    <youtube_url>,<start_time>,<end_time>
-    ```
-    For example:
-    ```
-    https://www.youtube.com/watch?v=dQw4w9WgXcQ,00:00:30,00:01:00
-    https://www.youtube.com/watch?v=3tmd-ClpJxA,00:01:00,00:01:30
-    ```
-3.  Run the script:
-    ```
-    python main.py
-    ```
-4.  The audio segments will be downloaded and saved in the same directory with filenames formatted as `<video_id>_<start_time>_<end_time>.mp3`.
+Run the script from your terminal:
 
+```
+python main.py
+```
+
+The script will present you with a menu of options:
+
+1.  **Download full video audio**: Prompts for a YouTube video URL and downloads the entire audio track.
+2.  **Download video audio segment**: Prompts for a YouTube video URL, a start time (HH:MM:SS), and an end time (HH:MM:SS) to download a specific audio segment.
+3.  **Exit**: Exits the application.
+
+The downloaded audio files will be saved in the `output` directory, with filenames formatted as `<video_title>_<start_time>_<end_time>.mp3` for segments, and `<video_title>.mp3` for full audio.

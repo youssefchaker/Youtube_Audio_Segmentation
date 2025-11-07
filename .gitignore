@@ -5,4 +5,4 @@ temp/
 *.mp3
 
 #FFmpeg
-ffmpeg-2025-11-06-git-222127418b-essentials_build
+ffmpeg-*-git-222127418b-essentials_build
